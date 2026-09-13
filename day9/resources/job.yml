@@ -1,0 +1,10 @@
+resources:
+  jobs:
+    day9_job:
+      name: day9_job
+
+      tasks:
+        - task_key: hello_task
+
+          spark_python_task:
+            python_file: ../src/hello.py
