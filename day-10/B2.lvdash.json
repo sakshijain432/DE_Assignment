@@ -1,0 +1,310 @@
+{
+  "datasets": [
+    {
+      "name": "c9a426d8",
+      "displayName": "Customer Count by Payment Options Overview",
+      "queryLines": [
+        "SELECT \n",
+        "    payment_method,\n",
+        "    COUNT(customer_id) as customers\n",
+        "FROM cyntexa_dev.sales.finance_demo\n",
+        "GROUP BY payment_method"
+      ],
+      "catalog": "cyntexa_dev",
+      "schema": "sales"
+    },
+    {
+      "name": "c95be85d",
+      "displayName": "Customer Sales Amount Summary Dataset",
+      "queryLines": [
+        "SELECT SUM(amount) AS total_amount, customer_id\n",
+        "FROM cyntexa_dev.sales.finance_demo\n",
+        "GROUP BY customer_id"
+      ],
+      "catalog": "cyntexa_dev",
+      "schema": "sales"
+    },
+    {
+      "name": "4bc1d4a5",
+      "displayName": "Sales Status Overview Report",
+      "queryLines": [
+        "SELECT status , COUNT(*) as total \n",
+        "FROM cyntexa_dev.sales.finance_demo\n",
+        "GROUP BY status\n"
+      ],
+      "catalog": "cyntexa_dev",
+      "schema": "sales"
+    }
+  ],
+  "pages": [
+    {
+      "name": "6480cf35",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "4c279dfe",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c9a426d8",
+                  "fields": [
+                    {
+                      "name": "payment_method",
+                      "expression": "`payment_method`"
+                    },
+                    {
+                      "name": "sum(customers)",
+                      "expression": "SUM(`customers`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "payment_method",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(customers)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 10,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "41d9b53b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c95be85d",
+                  "fields": [
+                    {
+                      "name": "customer_id",
+                      "expression": "`customer_id`"
+                    },
+                    {
+                      "name": "sum(total_amount)",
+                      "expression": "SUM(`total_amount`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "area",
+              "encodings": {
+                "x": {
+                  "fieldName": "customer_id",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_amount)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 10,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "28d039ac",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "4bc1d4a5",
+                  "fields": [
+                    {
+                      "name": "status",
+                      "expression": "`status`"
+                    },
+                    {
+                      "name": "sum(total)",
+                      "expression": "SUM(`total`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "status",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 9,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "235e1599",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "paymnet_method_filter",
+            "queries": [
+              {
+                "name": "dashboards/01f1b0fd295514cfaa152c4c2274b34a/datasets/01f1b0ffc42a176db42df73631c9c84d_payment_method",
+                "query": {
+                  "datasetName": "c9a426d8",
+                  "fields": [
+                    {
+                      "name": "payment_method",
+                      "expression": "`payment_method`"
+                    },
+                    {
+                      "name": "payment_method_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "paymnet\\_method\\_filter",
+                  "fields": []
+                }
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "payment_method",
+                    "queryName": "dashboards/01f1b0fd295514cfaa152c4c2274b34a/datasets/01f1b0ffc42a176db42df73631c9c84d_payment_method"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "43961db4",
+            "queries": [
+              {
+                "name": "dashboards/01f1b0fd295514cfaa152c4c2274b34a/datasets/01f1b1009d8c1f789674ff6eec57486d_status",
+                "query": {
+                  "datasetName": "4bc1d4a5",
+                  "fields": [
+                    {
+                      "name": "status",
+                      "expression": "`status`"
+                    },
+                    {
+                      "name": "status_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "status",
+                    "queryName": "dashboards/01f1b0fd295514cfaa152c4c2274b34a/datasets/01f1b1009d8c1f789674ff6eec57486d_status"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 1,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
